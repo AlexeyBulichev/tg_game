@@ -6,7 +6,7 @@ app = FastAPI()
 
 # Разрешим запросы от твоего WebApp
 origins = [
-    "https://exploding-kittens-webapp.vercel.app"
+    "https://tg-game-webapp.vercel.app"
 ]
 app.add_middleware(
     CORSMiddleware,
