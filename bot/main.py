@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
+from telegram import WebAppInfo
 import os
 
 # Логирование — НАЧАЛО
@@ -17,15 +18,18 @@ load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 # Команда /start
+WEBAPP_URL = os.getenv("WEBAPP_URL")
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("Нажми меня", callback_data="button_clicked")]
+        [InlineKeyboardButton("🎮 Играть", web_app=WebAppInfo(url=WEBAPP_URL))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
+
     await update.message.reply_text(
-        f"Привет, {update.effective_user.first_name}! Я кото-бот!",
+        f"Привет, {update.effective_user.first_name}! Готов играть?",
         reply_markup=reply_markup
     )
+
 
 # Обработка нажатий кнопки
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
